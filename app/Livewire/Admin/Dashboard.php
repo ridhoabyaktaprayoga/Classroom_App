@@ -9,6 +9,8 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
+    public $layout = 'layouts.admin';
+
     public function render()
     {
         $totalUsers = User::count();
@@ -33,6 +35,6 @@ class Dashboard extends Component
             'recentUsers' => $recentUsers,
             'recentClasses' => $recentClasses,
             'userRegistrationData' => $userRegistrationData,
-        ])->layout('layouts.admin');
+        ]);
     }
 }

@@ -10,6 +10,8 @@ class AnnouncementManagement extends Component
 {
     use WithPagination;
 
+    public $layout = 'layouts.admin';
+
     public $title;
     public $content;
     public $targetRole = 'all';
@@ -20,7 +22,7 @@ class AnnouncementManagement extends Component
     public function render()
     {
         $announcements = Announcement::paginate(10);
-        return view('livewire.admin.announcement-management', compact('announcements'))->layout('layouts.admin');
+        return view('livewire.admin.announcement-management', compact('announcements'));
     }
 
     public function create()

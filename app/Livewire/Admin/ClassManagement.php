@@ -12,13 +12,15 @@ class ClassManagement extends Component
 {
     use WithPagination;
 
+    public $layout = 'layouts.admin';
+
     public function render()
     {
         $kelas = Kelas::with('guru')->paginate(10);
         $materi = Materi::with('kelas')->paginate(10);
         $tugas = Tugas::with('kelas')->paginate(10);
 
-        return view('livewire.admin.class-management', compact('kelas', 'materi', 'tugas'))->layout('layouts.admin');
+        return view('livewire.admin.class-management', compact('kelas', 'materi', 'tugas'));
     }
 
     public function deleteKelas(Kelas $kelas)
