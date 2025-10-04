@@ -74,34 +74,6 @@
                     @enderror
                 </div>
 
-                <div class="mt-4">
-                    <label for="role" class="block text-sm font-medium text-gray-700">Peran</label>
-                    <div class="mt-1">
-                        <div class="flex items-center">
-                            <input
-                                wire:model="role"
-                                id="role_guru"
-                                name="role"
-                                type="radio"
-                                value="guru"
-                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-                            <label for="role_guru" class="ml-2 block text-sm text-gray-900">Guru</label>
-                        </div>
-                        <div class="flex items-center mt-1">
-                            <input
-                                wire:model="role"
-                                id="role_siswa"
-                                name="role"
-                                type="radio"
-                                value="siswa"
-                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-                            <label for="role_siswa" class="ml-2 block text-sm text-gray-900">Siswa</label>
-                        </div>
-                    </div>
-                    @error('role')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
             </div>
 
             <div>

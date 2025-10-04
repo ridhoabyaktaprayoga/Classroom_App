@@ -49,6 +49,15 @@ Route::post('/logout', function (Request $request) {
 
 // Dashboard routes
 Route::middleware(['auth'])->group(function () {
+    // Admin routes
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard');
+        Route::get('/users', \App\Livewire\Admin\UserManagement::class)->name('users');
+        Route::get('/classes', \App\Livewire\Admin\ClassManagement::class)->name('classes');
+        Route::get('/settings', \App\Livewire\Admin\SystemSettings::class)->name('settings');
+        Route::get('/announcements', \App\Livewire\Admin\AnnouncementManagement::class)->name('announcements');
+    });
+
     // Guru routes
     Route::middleware(['guru'])->group(function () {
         Route::get('/guru/dashboard', GuruDashboard::class)->name('guru.dashboard');
@@ -137,7 +146,9 @@ Route::middleware(['auth', 'guru'])->group(function () {
 // Default route
 Route::get('/', function () {
     if (auth()->check()) {
-        if (auth()->user()->isGuru()) {
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        } elseif (auth()->user()->isGuru()) {
             return redirect()->route('guru.dashboard');
         } else {
             return redirect()->route('siswa.dashboard');

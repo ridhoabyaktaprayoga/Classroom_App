@@ -30,7 +30,9 @@ class LoginForm extends Component
             $user = Auth::user();
 
             // Redirect based on user role
-            if ($user->isGuru()) {
+            if ($user->isAdmin()) {
+                return $this->redirectRoute('admin.dashboard', navigate: true);
+            } elseif ($user->isGuru()) {
                 return $this->redirectRoute('guru.dashboard', navigate: true);
             } else {
                 return $this->redirectRoute('siswa.dashboard', navigate: true);

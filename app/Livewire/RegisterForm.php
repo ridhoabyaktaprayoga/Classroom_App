@@ -14,13 +14,11 @@ class RegisterForm extends Component
     public $email;
     public $password;
     public $password_confirmation;
-    public $role;
 
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8|confirmed',
-        'role' => 'required|in:guru,siswa',
     ];
 
     public function render()
@@ -36,7 +34,7 @@ class RegisterForm extends Component
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
+            'role' => 'siswa',
         ]);
 
         event(new Registered($user));
@@ -44,7 +42,9 @@ class RegisterForm extends Component
         Auth::login($user);
 
         // Redirect based on role
-        if ($user->isGuru()) {
+        if ($user->isAdmin()) {
+            return $this->redirectRoute('admin.dashboard', navigate: true);
+        } elseif ($user->isGuru()) {
             return $this->redirectRoute('guru.dashboard', navigate: true);
         } else {
             return $this->redirectRoute('siswa.dashboard', navigate: true);

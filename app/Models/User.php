@@ -52,7 +52,7 @@ class User extends Authenticatable
             'role' => 'string',
         ];
     }
-    
+
     /**
      * Check if user is a guru
      */
@@ -60,7 +60,7 @@ class User extends Authenticatable
     {
         return $this->role === 'guru';
     }
-    
+
     /**
      * Check if user is a siswa
      */
@@ -68,7 +68,15 @@ class User extends Authenticatable
     {
         return $this->role === 'siswa';
     }
-    
+
+    /**
+     * Check if user is an admin
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
     /**
      * Get kelas created by this user (guru)
      */
@@ -76,7 +84,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Kelas::class, 'guru_id');
     }
-    
+
     /**
      * Get kelas joined by this user (siswa)
      */
@@ -86,7 +94,7 @@ class User extends Authenticatable
                     ->withPivot('joined_at')
                     ->withTimestamps();
     }
-    
+
     /**
      * Get pengumpulan submitted by this user
      */
@@ -94,7 +102,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pengumpulan::class, 'siswa_id');
     }
-    
+
     /**
      * Get discussions created by this user
      */
@@ -102,7 +110,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Discussion::class);
     }
-    
+
     /**
      * Get replies created by this user
      */
