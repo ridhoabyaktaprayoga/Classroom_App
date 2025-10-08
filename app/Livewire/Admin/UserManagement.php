@@ -10,8 +10,6 @@ class UserManagement extends Component
 {
     use WithPagination;
 
-    public $layout = 'layouts.admin';
-
     public $selectedUser;
     public $newRole;
 
@@ -19,7 +17,7 @@ class UserManagement extends Component
     {
         return view('livewire.admin.user-management', [
             'users' => User::paginate(10)
-        ]);
+        ])->layout('layouts.admin');
     }
 
     public function changeRole(User $user, $newRole)

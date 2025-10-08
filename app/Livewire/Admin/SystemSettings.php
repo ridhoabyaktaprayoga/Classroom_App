@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class SystemSettings extends Component
 {
-    public $layout = 'layouts.admin';
 
     public $appName;
     public $allowPublicRegistration;
@@ -20,7 +19,7 @@ class SystemSettings extends Component
 
     public function render()
     {
-        return view('livewire.admin.system-settings');
+        return view('livewire.admin.system-settings')->layout('layouts.admin');
     }
 
     public function save()
