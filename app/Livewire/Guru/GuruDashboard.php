@@ -10,7 +10,11 @@ class GuruDashboard extends Component
 {
     public function render()
     {
-        $totalKelas = Kelas::where('guru_id', auth()->id())->count();
+        // Get classes where teacher has joined and selected subjects
+        $totalKelas = Kelas::whereHas('teachers', function($query) {
+            $query->where('teacher_id', auth()->id());
+        })->count();
+
         $totalSiswa = User::where('role', 'siswa')->count();
 
         $announcements = \App\Models\Announcement::where(function($query) {

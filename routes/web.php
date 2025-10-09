@@ -6,7 +6,6 @@ use App\Livewire\RegisterForm;
 use Illuminate\Http\Request;
 use App\Livewire\Guru\GuruDashboard;
 use App\Livewire\Siswa\SiswaDashboard;
-use App\Livewire\Guru\CreateKelas;
 use App\Livewire\Guru\ListKelas;
 use App\Livewire\Guru\DetailKelas;
 use App\Livewire\Siswa\JoinKelas;
@@ -54,6 +53,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard');
         Route::get('/users', \App\Livewire\Admin\UserManagement::class)->name('users');
         Route::get('/classes', \App\Livewire\Admin\ClassManagement::class)->name('classes');
+        Route::get('/classes/create', \App\Livewire\Admin\CreateClass::class)->name('classes.create');
+        Route::get('/classes/{kelas}/edit', \App\Livewire\Admin\EditClass::class)->name('classes.edit');
+        Route::get('/classes/{kelas}/subjects', \App\Livewire\Admin\SubjectManagement::class)->name('classes.subjects');
+        Route::get('/password-resets', \App\Livewire\Admin\PasswordResetManagement::class)->name('password-resets');
         Route::get('/settings', \App\Livewire\Admin\SystemSettings::class)->name('settings');
         Route::get('/announcements', \App\Livewire\Admin\AnnouncementManagement::class)->name('announcements');
     });
@@ -64,7 +67,8 @@ Route::middleware(['auth'])->group(function () {
 
         // Guru class management routes
         Route::get('/guru/kelas', ListKelas::class)->name('guru.kelas.index');
-        Route::get('/guru/kelas/create', CreateKelas::class)->name('guru.kelas.create');
+        Route::get('/guru/kelas/join', \App\Livewire\Guru\JoinClass::class)->name('guru.kelas.join');
+        Route::get('/guru/kelas/{kelas}/select-subjects', \App\Livewire\Guru\SelectSubject::class)->name('guru.select-subjects');
         Route::get('/guru/kelas/{id}', DetailKelas::class)->name('guru.kelas.show');
 
         // Guru tugas edit route

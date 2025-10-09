@@ -18,7 +18,16 @@ class DetailKelas extends Component
     public function mount($id)
     {
         $this->kelasId = $id;
-        $this->kelas = Kelas::where('guru_id', auth()->id())->with(['materi', 'tugas', 'siswa'])->findOrFail($id);
+        $this->kelas = Kelas::with(['materi', 'tugas', 'siswa'])->findOrFail($id);
+
+        // Check if the teacher has access to this class (either created it or joined it)
+        $hasAccess = $this->kelas->guru_id === auth()->id() ||
+                    $this->kelas->teachers()->where('teacher_id', auth()->id())->exists();
+
+        if (!$hasAccess) {
+            abort(403, 'You do not have access to this class.');
+        }
+
         $this->tugas = $this->kelas->tugas;
         $this->siswa = $this->kelas->siswa;
     }

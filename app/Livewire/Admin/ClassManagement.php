@@ -5,8 +5,10 @@ namespace App\Livewire\Admin;
 use App\Models\Kelas;
 use App\Models\Materi;
 use App\Models\Tugas;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class ClassManagement extends Component
 {
@@ -14,15 +16,16 @@ class ClassManagement extends Component
 
     public function render()
     {
-        $kelas = Kelas::with('guru')->paginate(10);
+        $kelas = Kelas::with(['teachers', 'siswa'])->paginate(10);
         $materi = Materi::with('kelas')->paginate(10);
         $tugas = Tugas::with('kelas')->paginate(10);
 
         return view('livewire.admin.class-management', compact('kelas', 'materi', 'tugas'))->layout('layouts.admin');
     }
 
-    public function deleteKelas(Kelas $kelas)
+    public function deleteKelas($kelasId)
     {
+        $kelas = Kelas::findOrFail($kelasId);
         $kelas->delete();
         session()->flash('message', 'Class deleted successfully.');
     }

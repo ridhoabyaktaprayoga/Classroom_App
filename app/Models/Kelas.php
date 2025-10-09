@@ -18,6 +18,8 @@ class Kelas extends Model
         'kode_kelas',
         'deskripsi',
         'guru_id',
+        'class_code',
+        'created_by',
     ];
 
     /**
@@ -53,12 +55,28 @@ class Kelas extends Model
     {
         return $this->hasMany(Tugas::class);
     }
-    
+
     /**
      * Get the discussions in this class
      */
     public function discussions()
     {
         return $this->hasMany(Discussion::class);
+    }
+
+    /**
+     * Get the subjects in this class
+     */
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class, 'class_id');
+    }
+
+    /**
+     * Get the teachers in this class
+     */
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class, 'teacher_subject', 'class_id', 'teacher_id')->distinct();
     }
 }
