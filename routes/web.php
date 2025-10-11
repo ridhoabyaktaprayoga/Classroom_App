@@ -158,5 +158,5 @@ Route::get('/', function () {
             return redirect()->route('siswa.dashboard');
         }
     }
-    return view('welcome');
+    return redirect('/login');
 });
