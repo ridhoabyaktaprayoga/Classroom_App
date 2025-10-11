@@ -26,12 +26,19 @@
                         @else
                             <div class="mb-4">
                                 @foreach($subjects as $subject)
-                                    <label class="flex items-center mb-2">
+                                    @php
+                                        $isAssignedToOther = $kelas->teachers()->where('subject_id', $subject->id)->where('teacher_id', '!=', auth()->id())->exists();
+                                    @endphp
+                                    <label class="flex items-center mb-2 {{ $isAssignedToOther ? 'opacity-50' : '' }}">
                                         <input type="checkbox"
                                                wire:click="selectSubject({{ $subject->id }})"
                                                {{ in_array($subject->id, $selectedSubjects) ? 'checked' : '' }}
+                                               {{ $isAssignedToOther ? 'disabled' : '' }}
                                                class="mr-2">
                                         {{ $subject->name }}
+                                        @if($isAssignedToOther)
+                                            <span class="text-sm text-gray-500">(Already assigned to another teacher)</span>
+                                        @endif
                                     </label>
                                 @endforeach
                             </div>

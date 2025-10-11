@@ -38,6 +38,14 @@ class SelectSubject extends Component
             return;
         }
 
+        // Check if any selected subject is already assigned to another teacher
+        foreach ($this->selectedSubjects as $subjectId) {
+            if ($this->kelas->teachers()->where('subject_id', $subjectId)->where('teacher_id', '!=', Auth::id())->exists()) {
+                session()->flash('error', 'One or more selected subjects are already assigned to another teacher.');
+                return;
+            }
+        }
+
         // Remove existing selections for this teacher and class
         $this->kelas->teachers()->detach(Auth::id());
 
